@@ -44,12 +44,16 @@ A Go application that receives Google Cloud Platform (GCP) Error Reporting webho
 - SLACK_BOT_TOKEN
 - SLACK_CHANNEL_MAP
 - SLACK_DEFAULT_CHANNEL
+- BASIC_AUTH_USERNAME
+- BASIC_AUTH_PASSWORD
 
 Examples
 ```
 export SLACK_BOT_TOKEN="xoxb-your-slack-bot-token"
 export PROJECT_CHANNEL_MAP="project_id_1:C01ABCD2EFG,project_id_2:C02HIJK3LMN"
 export DEFAULT_CHANNEL_ID="C03OPQR4STU"
+export BASIC_AUTH_USERNAME="your-username"
+export BASIC_AUTH_PASSWORD="your-password"
 ```
 
 ## Testing

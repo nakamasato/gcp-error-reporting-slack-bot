@@ -85,6 +85,22 @@ func loadProjectChannelMap() error {
 }
 
 func webhookHandler(w http.ResponseWriter, r *http.Request) {
+	// Basic認証のチェック
+	username := os.Getenv("BASIC_AUTH_USERNAME")
+	password := os.Getenv("BASIC_AUTH_PASSWORD")
+	if username == "" || password == "" {
+		log.Println("Basic auth credentials are not set in environment variables")
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		return
+	}
+
+	providedUsername, providedPassword, ok := r.BasicAuth()
+	if !ok || providedUsername != username || providedPassword != password {
+		w.Header().Set("WWW-Authenticate", `Basic realm="Restricted"`)
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
 	if r.Method != http.MethodPost {
 		http.Error(w, "Only POST method is allowed", http.StatusMethodNotAllowed)
 		return
