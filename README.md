@@ -2,12 +2,25 @@
 
 A Go application that receives Google Cloud Platform (GCP) Error Reporting webhooks and sends formatted alerts to specified Slack channels. This bot helps teams stay informed about errors occurring in their GCP projects by delivering real-time notifications directly to Slack.
 
+```mermaid
+sequenceDiagram
+    participant GCP as GCP Error Reporting
+    participant App as gcp-error-reporting-slack-bot
+    participant Slack as Slack
+
+    GCP->>App: HTTP POST Event via Webhook
+    App->>App: Authenticate Request<br/>Parse JSON Payload
+    App->>App: Determine Slack Channel &<br/>Build Slack Message
+    App->>Slack: Send Message via Slack API
+    Slack-->>App: Acknowledge Message Receipt
+    App-->>GCP: HTTP 200 OK
+```
+
 ## Features
 
 - Webhook Receiver: Accepts GCP Error Reporting webhooks with detailed error information.
 - Slack Integration: Sends error notifications to Slack channels using rich formatting.
 - Project-Based Channel Mapping: Configurable mapping of GCP project IDs to Slack channels.
-- Customizable Alerts: Uses Slack attachments to highlight errors with red color and actionable buttons.
 - Environment Variable Configuration: Easily configure settings without changing code.
 
 ## Prerequisites
