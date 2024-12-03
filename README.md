@@ -63,7 +63,7 @@ go run main.go
 ```
 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{
+curl -X POST -H "Content-Type: application/json" -u your-username:your-password -d '{
   "version": "1.0",
   "subject": "Error in production",
   "group_info": {
