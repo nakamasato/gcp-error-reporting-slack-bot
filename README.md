@@ -1,5 +1,7 @@
 # GCP Error Reporting Slack Bot
 
+<img src="image.png" alt="drawing" width="500"/>
+
 A Go application that receives Google Cloud Platform (GCP) Error Reporting webhooks and sends formatted alerts to specified Slack channels. This bot helps teams stay informed about errors occurring in their GCP projects by delivering real-time notifications directly to Slack.
 
 ```mermaid
@@ -9,8 +11,6 @@ sequenceDiagram
     participant Slack as Slack
 
     GCP->>App: HTTP POST Event via Webhook
-    App->>App: Authenticate Request<br/>Parse JSON Payload
-    App->>App: Determine Slack Channel &<br/>Build Slack Message
     App->>Slack: Send Message via Slack API
     Slack-->>App: Acknowledge Message Receipt
     App-->>GCP: HTTP 200 OK
@@ -99,6 +99,13 @@ curl -X POST -H "Content-Type: application/json" -u your-username:your-password 
   }
 }' http://localhost:8080/webhook
 ```
+
+> [!NOTE]
+> Or you can add the Header `Authorization: Basic <base64 of <your-username>:<your-password>>`
+> ```
+> echo -n 'your-username:your-password' | base64
+> eW91ci11c2VybmFtZTp5b3VyLXBhc3N3b3Jk
+> ```
 
 ## References
 
