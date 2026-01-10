@@ -52,22 +52,28 @@ sequenceDiagram
 
 1. Set the webhook URL to the Error Reporting webhook URL.
 
+```hcl
+resource "google_monitoring_notification_channel" "gcp_error_reporting_slack_bot" {
+  display_name = "gcp-error-reporting-slack-bot"
+  type         = "webhook_basicauth"
+  labels = {
+    username = "gcp-error-reporting"
+    url      = "https://<cloud run service name of gcp_error_reporting_slack_bot>-<project number>.asia-northeast1.run.app/webhook"
+  }
+
+  sensitive_labels {
+    password = "xxxx" # only valid for webhook_basicauth
+  }
+}
+```
+
 ## Environment Variables
 
-- SLACK_BOT_TOKEN
-- SLACK_CHANNEL_MAP
-- SLACK_DEFAULT_CHANNEL
-- BASIC_AUTH_USERNAME
-- BASIC_AUTH_PASSWORD
-
-Examples
-```
-export SLACK_BOT_TOKEN="xoxb-your-slack-bot-token"
-export PROJECT_CHANNEL_MAP="project_id_1:C01ABCD2EFG,project_id_2:C02HIJK3LMN"
-export DEFAULT_CHANNEL_ID="C03OPQR4STU"
-export BASIC_AUTH_USERNAME="your-username"
-export BASIC_AUTH_PASSWORD="your-password"
-```
+- `SLACK_BOT_TOKEN`: `xoxb-your-slack-bot-token`
+- `SLACK_CHANNEL_MAP`: `project_id_1:C01ABCD2EFG,project_id_2:C02HIJK3LMN`
+- `SLACK_DEFAULT_CHANNEL`: default slack channel id (e.g. `C03OPQR4STU`)
+- `BASIC_AUTH_USERNAME`: basic auth username
+- `BASIC_AUTH_PASSWORD`: basic auth password
 
 ## Testing
 
